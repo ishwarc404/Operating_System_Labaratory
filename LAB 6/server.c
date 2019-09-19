@@ -15,11 +15,20 @@
 #define LIST "list"
 #define GET "get"
 
+
+//THREADING VARIABLES
+void *Producer();
+void *Consumer();
+int BufferIndex=0;
+char *BUFFER;
+int read_check;
+
+int sockfd = 0;				        // listen - listen file descriptor
+int connfd = 0;					// connect - connect file descriptor
+char recvBuff[256];	
+
 int main(void)
-{
-	int sockfd = 0;				        // listen - listen file descriptor
-	int connfd = 0;					// connect - connect file descriptor
-	char recvBuff[256];				
+{		
 	struct sockaddr_in serv_addr;			// A sockaddr_in is a structure containing an internet address. 
 							// This structure is defined in <netinet/in.h>.
 	char sendBuff[1024];
@@ -77,6 +86,7 @@ int main(void)
 			while (1)
 		        {
 			        /*TODO:  First read file in chunks of 256 bytes */
+
 			        unsigned char buff[256] = {0};
 					//we read the contents of the "file" into the variable buffer in chucks of 256 bytes
 					int read_check = read(file,buff,sizeof(buff));
@@ -102,7 +112,7 @@ int main(void)
 			
 		      d = opendir(".");		// Open the current directory. "." means current directory
 		      
-
+		
 		      if (d)			// d points to the current directory
 		      {
 
@@ -121,4 +131,3 @@ int main(void)
          }   
   	         return 0;
 }
-
